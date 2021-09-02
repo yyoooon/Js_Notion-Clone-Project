@@ -1,0 +1,128 @@
+@import url("/css/reset.css");
+
+#notion_app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 100%;
+  max-height: 100%;
+  color: rgba(25, 23, 17, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  background: rgb(247, 246, 243);
+  z-index: 99;
+}
+
+.sidebar_contents_wrap {
+  margin-top: 80px;
+}
+
+.page_block {
+  width: 100%;
+  min-height: 27px;
+  padding-bottom: 2px 0;
+  text-align: left;
+}
+
+.page_block a {
+  display: block;
+}
+
+.block_focuable_elements {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 27px;
+  padding: 2px 14px;
+}
+
+.block_toggleButton {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 10px;
+  color: rgba(25, 23, 17, 0.4);
+}
+
+.block_name {
+  flex: 1 1 auto;
+  width: 140px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.block_add_pageButton,
+.block_removeButton {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 0 4px;
+  color: rgba(25, 23, 17, 0.4);
+}
+
+.create_page_block_button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 27px;
+  padding: 2px 14px;
+}
+
+/* ---------------------------------- */
+
+.edit_frame {
+  flex-grow: 0;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  height: 100%;
+  max-height: 100%;
+}
+
+.editor {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: rgb(55, 53, 47);
+}
+
+.editor input,
+.editor textarea {
+  display: block;
+  width: 900px;
+  padding-left: 96px;
+  padding-right: 96px;
+  /* border: 1px solid black; */
+}
+
+.editor input[name="title"] {
+  height: 53px;
+  margin-top: 80px;
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: 40px;
+}
+
+.editor input[name="title"]::placeholder {
+  color: rgba(55, 53, 47, 0.15);
+}
+
+.editor textarea[name="content"] {
+  height: 90%;
+  padding-bottom: 30vh;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.editor textarea[name="content"]::placeholder {
+  color: rgba(55, 53, 47, 0.15);
+}
