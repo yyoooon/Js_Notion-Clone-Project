@@ -16,15 +16,15 @@ export default function PageList({
     this.render();
   };
 
-  const createItem = (post) => {
+  const createItem = (page) => {
     return `
-    <li class="page_block" data-postid=${post.id}>
+    <li class="page_block" data-pageid=${page.id}>
       <a class="link" href="#">
           <div class="block_focuable_elements">
           <button class="block_toggleButton" type="button">
               ▶︎
           </button>
-          <h3 class="block_name">${post.title}</h3>
+          <h3 class="block_name">${page.title}</h3>
           <button class="block_removeButton" type="button">
               𝗫
           </button>
@@ -41,7 +41,7 @@ export default function PageList({
   this.render = () => {
     $pageList.innerHTML = `
     <ul class="page_blocks_list">
-        ${this.state.map((post) => createItem(post)).join("")}
+        ${this.state.map((page) => createItem(page)).join("")}
     </ul>
 `;
   };
@@ -50,16 +50,16 @@ export default function PageList({
     const { target } = e;
     const { className } = target;
     const $page_block = target.closest(".page_block");
-    const { postid } = $page_block.dataset;
+    const { pageid } = $page_block.dataset;
 
     if (className === "block_toggleButton") {
       // onToggle() - 자식 리스트들이 들어가야?
     } else if (className === "block_name") {
-      push(`/posts/${parseInt(postid)}`);
+      push(`/pages/${parseInt(pageid)}`);
     } else if (className === "block_removeButton") {
-      // onRemove(postId)
+      onRemove(pageid);
     } else if (className === "block_add_pageButton") {
-      push(`/posts/new`);
+      push(`/pages/new`);
     }
   });
 

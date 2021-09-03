@@ -1,9 +1,8 @@
 // 리스트 데이터를 받아와서 리스트 컴포넌트에 전해주는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
-
-import { request } from "../../utils/api.js";
 import PageList from "../sidebar/PageList.js";
 import LinkButton from "../LinkButton.js";
+import { getAllDocumentsData, deleteDocumentsData } from "../../utils/api.js";
 
 export default function Sidebar({ $target, initialState }) {
   const $sidebar = document.createElement("aside");
@@ -12,10 +11,7 @@ export default function Sidebar({ $target, initialState }) {
   this.state = initialState;
 
   this.setState = async () => {
-    const allDocuments = await request(`/documents`, {
-      method: "GET",
-    });
-    pageList.setState(allDocuments);
+    pageList.setState(await getAllDocumentsData());
   };
 
   let isinitialize = false;
@@ -44,5 +40,6 @@ export default function Sidebar({ $target, initialState }) {
       className: "create_page_block_button",
     },
   });
+
   $target.appendChild($sidebar);
 }

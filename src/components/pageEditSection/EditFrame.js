@@ -1,6 +1,6 @@
 // 에디터에 어떤 내용을 전해줄 것인지 정하는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
-import { request } from "../../utils/api.js";
+import { request, getDocumentsData } from "../../utils/api.js";
 import { setItem, getItem, removeItem } from "../../utils/storage.js";
 import Editor from "./Editor.js";
 
@@ -43,10 +43,10 @@ export default function EditFrame({ $target, initialState }) {
   // 후에 로컬스토리지의 데이터와 생성 시간을 비교해서 더 최근 것으로 전달해주는 작업 필요
   const fetchPost = async () => {
     const { id } = this.state;
-    const document = await request(`/documents/${id}`, {
-      method: "GET",
-    });
-    this.setState(document);
+    // const document = await request(`/documents/${id}`, {
+    //   method: "GET",
+    // });
+    this.setState(await getDocumentsData(id));
   };
 
   $target.appendChild($editFrame);
