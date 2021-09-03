@@ -11,7 +11,8 @@ export default function Sidebar({ $target, initialState }) {
   this.state = initialState;
 
   this.setState = async () => {
-    pageList.setState(await getAllDocumentsData());
+    const pages = await getAllDocumentsData();
+    pageList.setState(pages);
   };
 
   let isinitialize = false;
@@ -30,13 +31,17 @@ export default function Sidebar({ $target, initialState }) {
   const pageList = new PageList({
     $target: $sidebarContentsWrap,
     initialState: this.state,
+    onRemove: async (pageid) => {
+      await deleteDocumentsData(pageid);
+      this.setState();
+    },
   });
 
   new LinkButton({
     $target: $sidebarContentsWrap,
     initialState: {
       text: "➕ 페이지 추가",
-      link: `/posts/new`,
+      link: `/pages/new`,
       className: "create_page_block_button",
     },
   });

@@ -25,9 +25,10 @@ export default function App({ $target }) {
 
   this.route = () => {
     const { pathname } = window.location;
+
     if (pathname === "/") {
       sidebar.setState();
-    } else if (pathname.indexOf("/posts/") === 0) {
+    } else if (pathname.indexOf("/pages/") === 0) {
       const [, , postId] = pathname.split("/");
       sidebar.setState();
       editFrame.setState({
@@ -39,4 +40,8 @@ export default function App({ $target }) {
 
   this.route();
   initRouter(() => this.route());
+
+  window.addEventListener("popstate", () => {
+    this.route();
+  });
 }
