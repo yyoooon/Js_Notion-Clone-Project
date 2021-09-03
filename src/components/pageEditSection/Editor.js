@@ -1,6 +1,6 @@
-export default function EditFrameEditor({ $target, initialState, onEditing }) {
-  const $editFrameEditor = document.createElement("div");
-  $editFrameEditor.classList.add("editor");
+export default function Editor({ $target, initialState, onEditing }) {
+  const $editor = document.createElement("div");
+  $editor.classList.add("editor");
 
   this.state = initialState;
 
@@ -13,18 +13,19 @@ export default function EditFrameEditor({ $target, initialState, onEditing }) {
 
   this.render = () => {
     if (!isinitialize) {
-      $editFrameEditor.innerHTML = `
+      //처음에만 html을 만들어주고 이후에는 값만 바꿔준다
+      $editor.innerHTML = `
       <input type="text" name="title" value="${this.state.title}" placeholder="제목없음" />
       <textarea name="content" placeholder="내용을 적어주세요">${this.state.content}</textarea>`;
       isinitialize = true;
       return;
     }
-    $editFrameEditor.querySelector("[name=title]").value = this.state.title; // 속성 선택자
-    $editFrameEditor.querySelector("[name=content]").value = this.state.content;
+    $editor.querySelector("[name=title]").value = this.state.title; // 속성 선택자
+    $editor.querySelector("[name=content]").value = this.state.content;
   };
 
   // 내 상태를 바꿔야 한다
-  $editFrameEditor.addEventListener("keyup", (e) => {
+  $editor.addEventListener("keyup", (e) => {
     const { target } = e;
     const name = target.getAttribute("name");
     // 처음엔 빈 텍스트이기 때문에
@@ -38,5 +39,5 @@ export default function EditFrameEditor({ $target, initialState, onEditing }) {
     }
   });
   this.render();
-  $target.appendChild($editFrameEditor);
+  $target.appendChild($editor);
 }

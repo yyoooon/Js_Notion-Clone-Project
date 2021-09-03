@@ -1,13 +1,13 @@
-import { push } from "../../router.js";
+import { push } from "../../utils/router.js";
 
-export default function SidebarPagesList({
+export default function PageList({
   $target,
   initialState,
   onToggle,
   onRemove,
 }) {
-  const $sidebarPagesList = document.createElement("div");
-  $sidebarPagesList.classList.add("pages_outliner");
+  const $pageList = document.createElement("div");
+  $pageList.classList.add("pages_outliner");
 
   this.state = initialState;
 
@@ -33,24 +33,25 @@ export default function SidebarPagesList({
           </button>
           </div>
       </a>
-    <ul></ul>
+    <ul class="page_blocks_list"></ul>
   </li>
     `;
   };
 
   this.render = () => {
-    $sidebarPagesList.innerHTML = `
+    $pageList.innerHTML = `
     <ul class="page_blocks_list">
         ${this.state.map((post) => createItem(post)).join("")}
     </ul>
 `;
   };
 
-  $sidebarPagesList.addEventListener("click", (e) => {
+  $pageList.addEventListener("click", (e) => {
     const { target } = e;
     const { className } = target;
     const $page_block = target.closest(".page_block");
     const { postid } = $page_block.dataset;
+
     if (className === "block_toggleButton") {
       // onToggle() - 자식 리스트들이 들어가야?
     } else if (className === "block_name") {
@@ -62,5 +63,5 @@ export default function SidebarPagesList({
     }
   });
 
-  $target.appendChild($sidebarPagesList);
+  $target.appendChild($pageList);
 }

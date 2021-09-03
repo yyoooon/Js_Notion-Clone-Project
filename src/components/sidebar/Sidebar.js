@@ -1,16 +1,13 @@
 // 리스트 데이터를 받아와서 리스트 컴포넌트에 전해주는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
 
-import { request } from "../../api.js";
-import SidebarPagesList from "./SidebarPagesList.js";
+import { request } from "../../utils/api.js";
+import PageList from "../sidebar/PageList.js";
 import LinkButton from "../LinkButton.js";
 
 export default function Sidebar({ $target, initialState }) {
   const $sidebar = document.createElement("aside");
   $sidebar.classList.add("sidebar");
-  const $sidebarContentsWrap = document.createElement("div");
-  $sidebarContentsWrap.classList.add("sidebar_contents_wrap");
-  $sidebar.appendChild($sidebarContentsWrap);
 
   this.state = initialState;
 
@@ -18,14 +15,23 @@ export default function Sidebar({ $target, initialState }) {
     const allDocuments = await request(`/documents`, {
       method: "GET",
     });
-    sidebarPagesList.setState(allDocuments);
+    pageList.setState(allDocuments);
   };
 
+  let isinitialize = false;
   this.render = () => {
-    $target.appendChild($sidebar);
+    if (!isinitialize) {
+      $sidebar.innerHTML = `
+    <div class="sidebar_contents_wrap"></div>
+    `;
+      isinitialize = true;
+    }
   };
 
-  const sidebarPagesList = new SidebarPagesList({
+  this.render();
+
+  const $sidebarContentsWrap = $sidebar.querySelector(".sidebar_contents_wrap");
+  const pageList = new PageList({
     $target: $sidebarContentsWrap,
     initialState: this.state,
   });
@@ -38,6 +44,5 @@ export default function Sidebar({ $target, initialState }) {
       className: "create_page_block_button",
     },
   });
-
-  this.render();
+  $target.appendChild($sidebar);
 }
