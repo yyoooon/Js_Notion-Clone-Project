@@ -44,12 +44,7 @@ export default function EditFrame({ $target, initialState }) {
             }),
           });
 
-          this.setState({
-            // 수정 후 자식 바꿔주기
-            ...this.state,
-            title: page.title,
-            content: page.content,
-          });
+          replace(`/pages/${this.state.id}`); // 리스트, 편집 페이지에 업데이트
         }
       }, 2000);
     },
