@@ -1,18 +1,18 @@
 * {
   margin: 0;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   /* font-size: 16px; */
 }
 
 body {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   color: #000;
 }
 
@@ -52,6 +52,6 @@ button {
 
 ul,
 ol {
-  padding-left: 0;
+  /* padding-left: 0; */
   list-style: none;
 }

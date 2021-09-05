@@ -50,7 +50,7 @@ export default function EditFrame({ $target, initialState, onListChange }) {
           });
           onListChange();
         }
-      }, 2000);
+      }, 200);
     },
   });
 
