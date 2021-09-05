@@ -5,7 +5,7 @@ import { replace } from '../../utils/router.js';
 import { setItem, getItem, removeItem } from '../../utils/storage.js';
 import Editor from './Editor.js';
 
-export default function EditFrame({ $target, initialState }) {
+export default function EditFrame({ $target, initialState, onListChange }) {
   const $editFrame = document.createElement('section');
   $editFrame.classList.add('edit_frame');
 
@@ -25,17 +25,14 @@ export default function EditFrame({ $target, initialState }) {
           const createdPage = await request(`/documents/`, {
             method: 'POST',
             body: JSON.stringify({
-              title: page.title ? page.title : '제목 없음',
-              content: null,
+              title: page.title,
+              parent: null,
             }),
           });
           replace(`/pages/${createdPage.id}`);
-
-          this.setState({
-            // 생성 후 자식 바꿔주기
-            id: createdPage.id,
-          });
+          onListChange();
         } else {
+          // 데이터 수정하고 다시 불러오기
           await request(`/documents/${page.id}`, {
             method: 'PUT',
             body: JSON.stringify({
@@ -44,7 +41,7 @@ export default function EditFrame({ $target, initialState }) {
             }),
           });
 
-          replace(`/pages/${this.state.id}`); // 리스트, 편집 페이지에 업데이트
+          onListChange();
         }
       }, 2000);
     },

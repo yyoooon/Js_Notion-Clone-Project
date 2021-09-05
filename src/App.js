@@ -21,19 +21,22 @@ export default function App({ $target }) {
       createdAt: '',
       updatedAt: '',
     },
+    onListChange: () => {
+      sidebar.setState();
+    },
   });
+
+  sidebar.setState(); // 맨 처음에 불러오기
 
   this.route = async () => {
     const { pathname } = window.location;
     if (pathname === '/') {
-      sidebar.setState();
       editFrame.setState({
         ...this.state,
         id: 'new',
       });
     } else if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
-      sidebar.setState(); // 이전과 이후가 달라졌을 때만 동작하도록
       editFrame.setState({
         ...editFrame.state,
         id: isNaN(pageId) ? pageId : parseInt(pageId),
