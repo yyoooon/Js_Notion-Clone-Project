@@ -1,7 +1,7 @@
 // 에디터에 어떤 내용을 전해줄 것인지 정하는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
 import { request } from '../../utils/api.js';
-import { replace } from '../../utils/router.js';
+import { push, replace } from '../../utils/router.js';
 import { setItem, getItem, removeItem } from '../../utils/storage.js';
 import Editor from './Editor.js';
 
@@ -25,22 +25,29 @@ export default function EditFrame({ $target, initialState, onListChange }) {
           const createdPage = await request(`/documents/`, {
             method: 'POST',
             body: JSON.stringify({
-              title: page.title,
-              parent: null,
+              title: page.title ? page.title : '제목없음',
+              parent: this.state.parentId ? this.state.parentId : null,
             }),
           });
           replace(`/pages/${createdPage.id}`);
           onListChange();
         } else {
-          // 데이터 수정하고 다시 불러오기
+          // 데이터 수정 후 화면 업데이트 하기
           await request(`/documents/${page.id}`, {
             method: 'PUT',
             body: JSON.stringify({
-              title: page.title,
+              title: page.title ? page.title : '제목없음',
               content: page.content,
             }),
           });
-
+          // 같은 url에서 화면만 바꿔주기 - url이 같으면 서버에서 안 불러오기 때문에 내용까지 전부 다 넣어줘야 함
+          // 이 자체가 fetch의 과정, 불러오느냐 수정하고 수정한 내용을 보내느냐
+          this.setState({
+            ...this.state,
+            id: page.id,
+            title: page.title,
+            content: page.content,
+          });
           onListChange();
         }
       }, 2000);
@@ -59,6 +66,9 @@ export default function EditFrame({ $target, initialState, onListChange }) {
     }
   };
 
+  // id가 다르면 현재 상태를 id로 바꿔주고 데이터를 가져옴
+  // 가져온 데이터를 다음 상태로 넣어은 후 지금 상태로 바꿔줌 - id가 같은데 내용이 생성된 것
+  //  id가 같으므로
   this.setState = async nextState => {
     if (this.state.id !== nextState.id) {
       this.state = nextState;
@@ -74,7 +84,7 @@ export default function EditFrame({ $target, initialState, onListChange }) {
       }
       return;
     }
-    this.state = nextState;
+    this.state = nextState; // 수정된 새로운 내용담아서 바꾸기
 
     editor.setState(
       // 처음부터 new로 들어온 경우

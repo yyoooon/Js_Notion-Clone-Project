@@ -5,6 +5,7 @@ export default function PageList({
   initialState,
   onToggle,
   onRemove,
+  onChildPageAdd,
 }) {
   const $pageList = document.createElement('div');
   $pageList.classList.add('pages_outliner');
@@ -56,6 +57,7 @@ export default function PageList({
     } else if (className === 'block_removeButton') {
       onRemove(pageid);
     } else if (className === 'block_add_pageButton') {
+      onChildPageAdd(pageid);
       push(`/pages/new`);
     }
   });

@@ -4,7 +4,7 @@ import PageList from './PageList.js';
 import LinkButton from '../LinkButton.js';
 import { request } from '../../utils/api.js';
 
-export default function Sidebar({ $target, initialState }) {
+export default function Sidebar({ $target, initialState, onChildPageAdd }) {
   const $sidebar = document.createElement('aside');
   $sidebar.classList.add('sidebar');
 
@@ -37,6 +37,9 @@ export default function Sidebar({ $target, initialState }) {
       if (deletePageid === currentPageId) {
         history.back();
       }
+    },
+    onChildPageAdd: parentId => {
+      onChildPageAdd(parentId);
     },
   });
 

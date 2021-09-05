@@ -9,6 +9,12 @@ export default function App({ $target }) {
   const sidebar = new Sidebar({
     $target,
     initialState: [],
+    onChildPageAdd: parentId => {
+      editFrame.setState({
+        ...editFrame.state,
+        parentId,
+      });
+    },
   });
 
   const editFrame = new EditFrame({
@@ -26,7 +32,8 @@ export default function App({ $target }) {
     },
   });
 
-  sidebar.setState(); // 맨 처음에 불러오기
+  sidebar.setState(); // 맨 처음에 목록 불러오기
+  // 불러온 목록이 없을 경우 시작하기 페이지 만들어서 넣어주기
 
   this.route = async () => {
     const { pathname } = window.location;
