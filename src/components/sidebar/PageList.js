@@ -1,4 +1,4 @@
-import { push } from "../../utils/router.js";
+import { push } from '../../utils/router.js';
 
 export default function PageList({
   $target,
@@ -6,20 +6,19 @@ export default function PageList({
   onToggle,
   onRemove,
 }) {
-  const $pageList = document.createElement("div");
-  $pageList.classList.add("pages_outliner");
+  const $pageList = document.createElement('div');
+  $pageList.classList.add('pages_outliner');
 
   this.state = initialState;
 
-  this.setState = (nextState) => {
+  this.setState = nextState => {
     this.state = nextState;
     this.render();
   };
 
-  const createItem = (page) => {
+  const createItem = page => {
     return `
     <li class="page_block" data-pageid=${page.id}>
-      <a class="link" href="#">
           <div class="block_focuable_elements">
           <button class="block_toggleButton" type="button">
               ▶︎
@@ -32,7 +31,6 @@ export default function PageList({
               ➕
           </button>
           </div>
-      </a>
     <ul class="page_blocks_list"></ul>
   </li>
     `;
@@ -41,24 +39,23 @@ export default function PageList({
   this.render = () => {
     $pageList.innerHTML = `
     <ul class="page_blocks_list">
-        ${this.state.map((page) => createItem(page)).join("")}
+        ${this.state.map(page => createItem(page)).join('')}
     </ul>
 `;
   };
 
-  $pageList.addEventListener("click", (e) => {
+  $pageList.addEventListener('click', e => {
     const { target } = e;
     const { className } = target;
-    const $page_block = target.closest(".page_block");
-    const { pageid } = $page_block.dataset;
-
-    if (className === "block_toggleButton") {
+    const $pageBlock = target.closest('.page_block');
+    const { pageid } = $pageBlock.dataset;
+    if (className === 'block_toggleButton') {
       // onToggle() - 자식 리스트들이 들어가야?
-    } else if (className === "block_name") {
-      push(`/pages/${parseInt(pageid)}`);
-    } else if (className === "block_removeButton") {
+    } else if (className === 'block_name') {
+      push(`/pages/${pageid}`);
+    } else if (className === 'block_removeButton') {
       onRemove(pageid);
-    } else if (className === "block_add_pageButton") {
+    } else if (className === 'block_add_pageButton') {
       push(`/pages/new`);
     }
   });

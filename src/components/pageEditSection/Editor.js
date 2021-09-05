@@ -1,10 +1,10 @@
 export default function Editor({ $target, initialState, onEditing }) {
-  const $editor = document.createElement("div");
-  $editor.classList.add("editor");
+  const $editor = document.createElement('div');
+  $editor.classList.add('editor');
 
   this.state = initialState;
 
-  this.setState = (nextState) => {
+  this.setState = nextState => {
     this.state = nextState;
     this.render();
   };
@@ -13,21 +13,21 @@ export default function Editor({ $target, initialState, onEditing }) {
 
   this.render = () => {
     if (!isinitialize) {
-      //처음에만 html을 만들어주고 이후에는 값만 바꿔준다
+      // 처음에만 html을 만들어주고 이후에는 값만 바꿔준다
       $editor.innerHTML = `
       <input type="text" name="title" value="${this.state.title}" placeholder="제목없음" />
       <textarea name="content" placeholder="내용을 적어주세요">${this.state.content}</textarea>`;
       isinitialize = true;
       return;
     }
-    $editor.querySelector("[name=title]").value = this.state.title; // 속성 선택자
-    $editor.querySelector("[name=content]").value = this.state.content;
+    $editor.querySelector('[name=title]').value = this.state.title; // 속성 선택자
+    $editor.querySelector('[name=content]').value = this.state.content;
   };
 
   // 내 상태를 바꿔야 한다
-  $editor.addEventListener("keyup", (e) => {
+  $editor.addEventListener('keyup', e => {
     const { target } = e;
-    const name = target.getAttribute("name");
+    const name = target.getAttribute('name');
     // 처음엔 빈 텍스트이기 때문에
     if (this.state[name] !== undefined) {
       const nextState = {

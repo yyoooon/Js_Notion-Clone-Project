@@ -1,15 +1,8 @@
-import App from "./App.js";
-import {
-  getAllDocumentsData,
-  getDocumentsData,
-  createDocumentData,
-  updateDocumentsData,
-  deleteDocumentsData,
-  request,
-} from "./utils/api.js";
+import App from './App.js';
 
-const $target = document.querySelector("#notion_app");
+const $target = document.querySelector('#notion_app');
 
+// eslint-disable-next-line no-new
 new App({
   $target,
 });

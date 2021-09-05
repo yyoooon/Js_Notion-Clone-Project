@@ -1,19 +1,14 @@
 // 리스트 데이터를 받아와서 리스트 컴포넌트에 전해주는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
-import PageList from "../sidebar/PageList.js";
-import LinkButton from "../LinkButton.js";
-import { getAllDocumentsData, deleteDocumentsData } from "../../utils/api.js";
+import PageList from './PageList.js';
+import LinkButton from '../LinkButton.js';
+import { request } from '../../utils/api.js';
 
 export default function Sidebar({ $target, initialState }) {
-  const $sidebar = document.createElement("aside");
-  $sidebar.classList.add("sidebar");
+  const $sidebar = document.createElement('aside');
+  $sidebar.classList.add('sidebar');
 
   this.state = initialState;
-
-  this.setState = async () => {
-    const pages = await getAllDocumentsData();
-    pageList.setState(pages);
-  };
 
   let isinitialize = false;
   this.render = () => {
@@ -27,24 +22,40 @@ export default function Sidebar({ $target, initialState }) {
 
   this.render();
 
-  const $sidebarContentsWrap = $sidebar.querySelector(".sidebar_contents_wrap");
+  const $sidebarContentsWrap = $sidebar.querySelector('.sidebar_contents_wrap');
   const pageList = new PageList({
     $target: $sidebarContentsWrap,
     initialState: this.state,
-    onRemove: async (pageid) => {
-      await deleteDocumentsData(pageid);
+    onRemove: async deletePageid => {
+      await request(`/documents/${deletePageid}`, {
+        method: 'DELETE',
+      });
       this.setState();
+      // 삭제하려는 페이지와 현재 url이 같을 때 뒤로가기
+      const { pathname } = window.location;
+      const [, , currentPageId] = pathname.split('/');
+      if (deletePageid === currentPageId) {
+        history.back();
+      }
     },
   });
 
+  // eslint-disable-next-line no-new
   new LinkButton({
     $target: $sidebarContentsWrap,
     initialState: {
-      text: "➕ 페이지 추가",
+      text: '➕ 페이지 추가',
       link: `/pages/new`,
-      className: "create_page_block_button",
+      className: 'create_page_block_button',
     },
   });
+
+  this.setState = async () => {
+    const pages = await request(`/documents`, {
+      method: 'GET',
+    });
+    pageList.setState(pages);
+  };
 
   $target.appendChild($sidebar);
 }

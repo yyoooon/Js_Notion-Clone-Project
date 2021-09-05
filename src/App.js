@@ -1,6 +1,6 @@
-import Sidebar from "./components/sidebar/Sidebar.js";
-import EditFrame from "./components/pageEditSection/EditFrame.js";
-import { initRouter } from "./utils/router.js";
+import Sidebar from './components/sidebar/Sidebar.js';
+import EditFrame from './components/pageEditSection/EditFrame.js';
+import { initRouter, replaceRouter } from './utils/router.js';
 
 // 클릭 이벤트 시에 url이 바뀌게 하는 작업 (o)
 // 이제 url을 불러와서 id를 뽑아낸 후 editFrame의 id상태를 바꿔줘야 함 ()
@@ -14,34 +14,39 @@ export default function App({ $target }) {
   const editFrame = new EditFrame({
     $target,
     initialState: {
-      id: "init",
-      title: "안녕하세요",
-      content: "시작해보세요",
+      id: '',
+      title: '',
+      content: '',
       documents: [],
-      createdAt: "",
-      updatedAt: "",
-    }, // 후에 로컬 스토리지에서 불러올 것 (남아있는 값이 있는 경우)
+      createdAt: '',
+      updatedAt: '',
+    },
   });
 
-  this.route = () => {
+  this.route = async () => {
     const { pathname } = window.location;
-
-    if (pathname === "/") {
-      sidebar.setState();
-    } else if (pathname.indexOf("/pages/") === 0) {
-      const [, , postId] = pathname.split("/");
+    if (pathname === '/') {
       sidebar.setState();
       editFrame.setState({
+        ...this.state,
+        id: 'new',
+      });
+    } else if (pathname.indexOf('/pages/') === 0) {
+      const [, , pageId] = pathname.split('/');
+      sidebar.setState(); // 이전과 이후가 달라졌을 때만 동작하도록
+      editFrame.setState({
         ...editFrame.state,
-        id: postId,
+        id: isNaN(pageId) ? pageId : parseInt(pageId),
       });
     }
   };
 
   this.route();
-  initRouter(() => this.route());
 
-  window.addEventListener("popstate", () => {
+  initRouter(() => this.route());
+  replaceRouter(() => this.route());
+
+  window.addEventListener('popstate', () => {
     this.route();
   });
 }
