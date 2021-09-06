@@ -12,9 +12,10 @@ export default function Sidebar({ $target, initialState, onChildPageAdd }) {
 
   let isinitialize = false;
   this.render = () => {
+    // 돔으로 만들기!
     if (!isinitialize) {
       $sidebar.innerHTML = `
-    <div class="sidebar_contents_wrap"></div>
+    <div class="sidebar_contents_wrap"></div> 
     `;
       isinitialize = true;
     }

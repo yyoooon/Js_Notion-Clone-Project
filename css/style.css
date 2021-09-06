@@ -24,6 +24,14 @@
   margin-top: 80px;
 }
 
+.toggled {
+  display: none;
+}
+
+.page_blocks_list {
+  padding-left: 14px;
+}
+
 .page_block {
   width: 100%;
   min-height: 27px;
@@ -31,16 +39,12 @@
   text-align: left;
 }
 
-.page_block a {
-  display: block;
-}
-
 .block_focuable_elements {
   display: flex;
   align-items: center;
   width: 100%;
   min-height: 27px;
-  padding: 2px 14px;
+  padding: 2px 0;
 }
 
 .block_toggleButton {
@@ -56,6 +60,8 @@
   font-size: 14px;
   font-weight: 500;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .block_add_pageButton,

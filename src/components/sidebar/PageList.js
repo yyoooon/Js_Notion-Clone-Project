@@ -31,7 +31,7 @@ export default function PageList({
       li.innerHTML = `
         <div class="block_focuable_elements">
               <button class="block_toggleButton" type="button">
-                  ▶︎
+                <i class="fas fa-caret-right"></i>
               </button>
               <h3 class="block_name">${page.title}</h3>
               <button class="block_removeButton" type="button">
@@ -43,8 +43,12 @@ export default function PageList({
         </div>
       `;
 
+      // <i class="fas fa-caret-right"></i>
+      // <i class="fas fa-caret-down"></i>
+
       const children = document.createElement('ul');
       children.classList.add('page_blocks_list');
+      // children.classList.add('toggled');
       li.appendChild(children);
 
       if (page.documents.length) {
@@ -64,8 +68,14 @@ export default function PageList({
     const $pageBlock = target.closest('.page_block');
     const { pageid } = $pageBlock.dataset;
 
-    if (className === 'block_toggleButton') {
-      // onToggle() - 자식 리스트들이 들어가야?
+    if (target.closest('button').className === 'block_toggleButton') {
+      const children = $pageBlock.querySelector('.page_blocks_list');
+      children.classList.toggle('toggled');
+      if (target.classList.contains('fa-caret-right')) {
+        target.classList.replace('fa-caret-right', 'fa-caret-down');
+      } else if (target.classList.contains('fa-caret-down')) {
+        target.classList.replace('fa-caret-down', 'fa-caret-right');
+      }
     } else if (className === 'block_name') {
       push(`/pages/${pageid}`);
     } else if (className === 'block_removeButton') {
