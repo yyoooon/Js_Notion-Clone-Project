@@ -28,18 +28,18 @@
   display: none;
 }
 
-.page_blocks_list {
+.page_list {
   padding-left: 14px;
 }
 
-.page_block {
+.page {
   width: 100%;
   min-height: 27px;
   padding-bottom: 2px 0;
   text-align: left;
 }
 
-.block_focuable_elements {
+.page_focuable_elements {
   display: flex;
   align-items: center;
   width: 100%;
@@ -47,14 +47,14 @@
   padding: 2px 0;
 }
 
-.block_toggleButton {
+.page_toggleButton {
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 10px;
   color: rgba(25, 23, 17, 0.4);
 }
 
-.block_name {
+.page_name {
   flex: 1 1 auto;
   width: 140px;
   font-size: 14px;
@@ -64,8 +64,8 @@
   text-overflow: ellipsis;
 }
 
-.block_add_pageButton,
-.block_removeButton {
+.page_add_pageButton,
+.page_removeButton {
   flex-grow: 0;
   flex-shrink: 0;
   padding: 0 4px;

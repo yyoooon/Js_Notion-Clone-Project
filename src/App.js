@@ -51,6 +51,7 @@ export default function App({ $target }) {
     }
   };
 
+  // route()가 중복되는 것 같은데 어떻게 리팩토링해야할지 모르겠다..
   this.route();
 
   initRouter(() => this.route());
