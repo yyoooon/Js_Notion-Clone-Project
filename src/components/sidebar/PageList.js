@@ -32,7 +32,9 @@ export default function PageList({
               <button class="page_toggleButton" type="button">
                 <i class="fas fa-caret-right"></i>
               </button>
-              <h3 class="page_name">${page.title}</h3>
+              <h3 class="page_name">${
+                page.title ? page.title : '제목 없음'
+              }</h3>
               <button class="page_removeButton" type="button">
                   𝗫
               </button>

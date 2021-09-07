@@ -72,7 +72,7 @@
   color: rgba(25, 23, 17, 0.4);
 }
 
-.create_page_block_button {
+.create_page_button {
   display: flex;
   align-items: center;
   width: 100%;

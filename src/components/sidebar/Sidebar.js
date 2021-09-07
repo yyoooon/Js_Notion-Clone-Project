@@ -10,6 +10,13 @@ export default function Sidebar({ $target, initialState, onChildPageAdd }) {
 
   this.state = initialState;
 
+  this.setState = async () => {
+    const pages = await request(`/documents`, {
+      method: 'GET',
+    });
+    pageList.setState(pages);
+  };
+
   let isinitialize = false;
   this.render = () => {
     // 돔으로 만들기!
@@ -50,16 +57,9 @@ export default function Sidebar({ $target, initialState, onChildPageAdd }) {
     initialState: {
       text: '➕ 페이지 추가',
       link: `/pages/new`,
-      className: 'create_page_block_button',
+      className: 'create_page_button',
     },
   });
-
-  this.setState = async () => {
-    const pages = await request(`/documents`, {
-      method: 'GET',
-    });
-    pageList.setState(pages);
-  };
 
   $target.appendChild($sidebar);
 }

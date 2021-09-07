@@ -15,7 +15,7 @@ export default function Editor({ $target, initialState, onEditing }) {
     if (!isinitialize) {
       // 처음에만 html을 만들어주고 이후에는 값만 바꿔준다
       $editor.innerHTML = `
-      <input type="text" name="title" value="${this.state.title}" placeholder="제목없음" />
+      <input type="text" name="title" value="${this.state.title}" placeholder="제목 없음" />
       <textarea name="content" placeholder="내용을 적어주세요">${this.state.content}</textarea>`;
       isinitialize = true;
       return;

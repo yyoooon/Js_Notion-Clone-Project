@@ -53,7 +53,7 @@ export default function EditFrame({ $target, initialState, onListChange }) {
           const createdPage = await request(`/documents/`, {
             method: 'POST',
             body: JSON.stringify({
-              title: page.title ? page.title : '제목없음',
+              title: page.title,
               parent: this.state.parentId ? this.state.parentId : null,
             }),
           });
@@ -64,7 +64,7 @@ export default function EditFrame({ $target, initialState, onListChange }) {
           await request(`/documents/${page.id}`, {
             method: 'PUT',
             body: JSON.stringify({
-              title: page.title ? page.title : '제목없음',
+              title: page.title,
               content: page.content,
             }),
           });
