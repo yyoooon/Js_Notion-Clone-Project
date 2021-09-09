@@ -70,13 +70,11 @@ export default function EditFrame({ $target, initialState, onListChange }) {
           });
           // 같은 url에서 화면만 바꿔주기 - url이 같으면 서버에서 안 불러오기 때문에 내용까지 전부 다 넣어줘야 함
           // 이 자체가 fetch의 과정, 불러오느냐 수정하고 수정한 내용을 보내느냐
-          this.setState({
-            ...this.state,
-            id: page.id,
-            title: page.title,
-            content: page.content,
-          });
-          onListChange();
+
+          // 제목 바뀔 때만 리스트 업데이트 되게 - 편집 내용은 렌더링 안돼도 된다
+          if (this.state.title !== page.title) {
+            onListChange();
+          }
         }
       }, 200);
     },
