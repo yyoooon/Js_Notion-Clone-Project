@@ -24,12 +24,17 @@
   margin-top: 80px;
 }
 
-.toggled {
+.page_list {
   display: none;
+  padding-left: 14px;
 }
 
-.page_list {
-  padding-left: 14px;
+#root {
+  display: block;
+}
+
+.visible {
+  display: block;
 }
 
 .page {
@@ -61,6 +66,7 @@
   font-weight: 500;
   text-align: left;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 

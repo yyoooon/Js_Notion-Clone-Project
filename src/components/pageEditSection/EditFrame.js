@@ -95,3 +95,5 @@ export default function EditFrame({ $target, initialState, onListChange }) {
 
   $target.appendChild($editFrame);
 }
+
+// 값이 넣어질때마다 렌더링이 됨..
