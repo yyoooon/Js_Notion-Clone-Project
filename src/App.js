@@ -1,9 +1,6 @@
 import Sidebar from './components/sidebar/Sidebar.js';
 import EditFrame from './components/pageEditSection/EditFrame.js';
-import { initRouter, replaceRouter } from './utils/router.js';
-
-// 클릭 이벤트 시에 url이 바뀌게 하는 작업 (o)
-// 이제 url을 불러와서 id를 뽑아낸 후 editFrame의 id상태를 바꿔줘야 함 ()
+import { pushRouter, replaceRouter } from './utils/router.js';
 
 export default function App({ $target }) {
   const sidebar = new Sidebar({
@@ -26,9 +23,6 @@ export default function App({ $target }) {
     },
   });
 
-  sidebar.setState(); // 맨 처음에 목록 불러오기
-  // 불러온 목록이 없을 경우 시작하기 페이지 만들어서 넣어주기
-
   this.route = async () => {
     const { pathname } = window.location;
     if (pathname === '/') {
@@ -46,11 +40,11 @@ export default function App({ $target }) {
   };
 
   // route()가 중복되는 것 같은데 어떻게 리팩토링해야할지 모르겠다
+  sidebar.setState();
   this.route();
 
-  initRouter(() => this.route());
-  replaceRouter(() => this.route());
-
+  pushRouter(this.route);
+  replaceRouter(this.route);
   window.addEventListener('popstate', () => {
     this.route();
   });
