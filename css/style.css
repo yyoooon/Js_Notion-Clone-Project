@@ -54,10 +54,15 @@
 }
 
 .page_toggleButton {
+  width: 20px;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: 10px;
   color: rgba(25, 23, 17, 0.4);
+}
+
+.page_toggleButton i {
+  width: 100%;
+  text-align: left;
 }
 
 .page_name {

@@ -1,7 +1,5 @@
-import { push } from "../utils/router.js";
-
-export default function LinkButton({ $target, initialState }) {
-  const $linkButton = document.createElement("button");
+export default function ClickButton({ $target, initialState, onClick }) {
+  const $linkButton = document.createElement('button');
   $target.appendChild($linkButton);
 
   this.state = initialState;
@@ -12,7 +10,7 @@ export default function LinkButton({ $target, initialState }) {
   };
   this.render();
 
-  $linkButton.addEventListener("click", () => {
-    push(this.state.link);
+  $linkButton.addEventListener('click', () => {
+    onClick();
   });
 }

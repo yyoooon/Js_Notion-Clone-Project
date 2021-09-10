@@ -1,33 +1,14 @@
 import Sidebar from './components/sidebar/Sidebar.js';
 import EditFrame from './components/pageEditSection/EditFrame.js';
-import { initRouter, replaceRouter, replace } from './utils/router.js';
-import { request } from './utils/api.js';
+import { initRouter, replaceRouter } from './utils/router.js';
 
 // 클릭 이벤트 시에 url이 바뀌게 하는 작업 (o)
 // 이제 url을 불러와서 id를 뽑아낸 후 editFrame의 id상태를 바꿔줘야 함 ()
 
 export default function App({ $target }) {
-  this.state = {
-    parentPageId: null,
-  };
-
-  this.setState = nextState => {
-    this.state = nextState;
-  };
-
   const sidebar = new Sidebar({
     $target,
     initialState: [],
-    onChildPageAdd: parentPageId => {
-      this.setState({
-        parentPageId,
-      });
-
-      editFrame.setState({
-        ...editFrame.state,
-        parentPageId,
-      });
-    },
   });
 
   const editFrame = new EditFrame({
@@ -57,18 +38,6 @@ export default function App({ $target }) {
       });
     } else if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
-      if (pageId === 'new') {
-        const createdPage = await request(`/documents/`, {
-          method: 'POST',
-          body: JSON.stringify({
-            title: null,
-            parent: this.state.parentPageId ? this.state.parentPageId : null,
-          }),
-        });
-        replace(`/pages/${createdPage.id}`);
-        sidebar.setState();
-        this.state.parentPageId = null;
-      }
       editFrame.setState({
         ...editFrame.state,
         id: isNaN(pageId) ? pageId : parseInt(pageId),

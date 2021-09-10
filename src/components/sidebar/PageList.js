@@ -92,7 +92,6 @@ export default function PageList({
       onRemove(pageid);
     } else if (className === 'page_add_pageButton') {
       onChildPageAdd(pageid);
-      push(`/pages/new`);
     }
   });
 
