@@ -42,6 +42,7 @@
   min-height: 27px;
   padding-bottom: 2px 0;
   text-align: left;
+  cursor: pointer;
 }
 
 .page_focuable_elements {
