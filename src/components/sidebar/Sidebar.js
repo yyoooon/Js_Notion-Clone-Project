@@ -1,7 +1,7 @@
 // 리스트 데이터를 받아와서 리스트 컴포넌트에 전해주는 컴포넌트
 // 서버, 스토리지에서 데이터를 받음
 import PageList from './PageList.js';
-import ClickButton from '../LinkButton.js';
+import ClickButton from '../ClickButton.js';
 import { request } from '../../utils/api.js';
 import { push } from '../../utils/router.js';
 
