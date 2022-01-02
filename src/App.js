@@ -34,12 +34,11 @@ export default function App({ $target }) {
       const [, , pageId] = pathname.split('/');
       editFrame.setState({
         ...editFrame.state,
-        id: isNaN(pageId) ? pageId : parseInt(pageId),
+        id: Number.isNaN(pageId) ? pageId : parseInt(pageId, 10),
       });
     }
   };
 
-  // route()가 중복되는 것 같은데 어떻게 리팩토링해야할지 모르겠다
   sidebar.setState();
   this.route();
 
