@@ -10,6 +10,8 @@
 </br>
 개인 프로젝트
 
+[배포 링크](https://js-notion-clone-project.vercel.app/)
+
 #### 주요 기능
 
 - **컴포넌트 패턴** 기반의 개발.
