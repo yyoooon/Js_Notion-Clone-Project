@@ -1,6 +1,4 @@
-import { push } from './router.js';
-
-const API_END_POINT = 'https://kdt.roto.codes'; // 반복되는 URL은 상수로 빼주는 것이 좋다
+const API_END_POINT = 'https://kdt.roto.codes';
 
 export const request = async (url, options = {}) => {
   try {
@@ -10,15 +8,14 @@ export const request = async (url, options = {}) => {
         'Content-Type': 'application/json',
         'x-username': 'yoon',
       },
-    }); // 다음 주소는 인자로 받는다
+    });
 
     if (res.ok) {
-      // 중요!!
       return await res.json();
     }
     throw new Error('API 호출 오류');
   } catch (e) {
-    push('/'); // 없는 페이지일 경우 홈으로
+    console.log(e.message);
   }
 };
 
