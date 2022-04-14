@@ -2,15 +2,16 @@ import Component from '../../base/Component.js';
 
 class PageItem extends Component {
   setup() {
-    this.createNode('li', 'page');
+    this.createNode({ tagName: 'li', classArr: ['page'] });
   }
   template() {
+    const { title } = this.props;
     return `
         <div class="page_focuable_elements">
         <button class="page_toggleButton" type="button">
           <i class="fas fa-caret-down"></i>
         </button>
-        <h3 class="page_name">${'제목 없음'}</h3>
+        <h3 class="page_name">${title}</h3>
         <button class="page_removeButton" type="button">
             𝗫
         </button>

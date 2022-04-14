@@ -18,9 +18,11 @@ export default class Component {
     return;
   }
 
-  createNode(tagName, className = '') {
+  createNode({ tagName, classArr }) {
     this.$node = createElement(tagName);
-    className && addClassName(this.$node, className);
+    if (Array.isArray(classArr) && classArr.length) {
+      addClassName(this.$node, classArr);
+    }
   }
 
   fetch() {
