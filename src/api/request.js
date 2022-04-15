@@ -9,9 +9,8 @@ const request = async (url, options = {}) => {
         'x-username': 'yoon',
       },
     });
-
     if (res.ok) {
-      return await res.json();
+      return res.json();
     }
     throw new Error('API 호출 오류');
   } catch (e) {

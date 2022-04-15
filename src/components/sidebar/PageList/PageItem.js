@@ -1,9 +1,13 @@
 import Component from '../../base/Component.js';
+import { addClass, addDataset } from '../../../utils/createElement.js';
 
 class PageItem extends Component {
   setup() {
-    this.createNode({ tagName: 'li', classArr: ['page'] });
+    this.createNode('li');
+    addClass(this.$node, ['page']);
+    addDataset(this.$node, { id: this.props.id });
   }
+
   template() {
     const { title } = this.props;
     return `
@@ -20,10 +24,6 @@ class PageItem extends Component {
         </button>
         </div>
     `;
-  }
-
-  setEvent() {
-    return;
   }
 }
 

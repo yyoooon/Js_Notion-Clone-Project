@@ -1,13 +1,11 @@
 import Component from '../../base/Component.js';
 import PageItem from './PageItem.js';
-import { getDocumentList } from '../../../api/apis.js';
-import { createElement, addClassName } from '../../../utils/createElement.js';
+import { createElement, addClass } from '../../../utils/createElement.js';
+import { push } from '../../../routes/router.js';
 
 class PageList extends Component {
   setup() {
-    this.state = {
-      data: [],
-    };
+    this.state = this.props;
   }
 
   template() {
@@ -18,7 +16,7 @@ class PageList extends Component {
 
   createChildrenPages(childrenData, parentEl) {
     const childItemContainer = createElement('ul');
-    addClassName(childItemContainer, ['page_list', 'visible']);
+    addClass(childItemContainer, ['page_list', 'visible']);
 
     parentEl.$node.appendChild(childItemContainer);
     this.createPageItems(childrenData, childItemContainer);
@@ -28,8 +26,8 @@ class PageList extends Component {
     itemContainer.innerHTML = '';
 
     data.length &&
-      data.map(({ title, documents }) => {
-        const pageItem = new PageItem(itemContainer, { title });
+      data.map(({ id, title, documents }) => {
+        const pageItem = new PageItem(itemContainer, { id, title });
         const haveChildren = documents.length;
         haveChildren && this.createChildrenPages(documents, pageItem);
       });
@@ -41,9 +39,28 @@ class PageList extends Component {
     this.createPageItems(data, $pageList);
   }
 
-  async fetch() {
-    const data = await getDocumentList();
-    this.setState({ data });
+  setEvent() {
+    this.addEventToTarget('click', '.page', e => {
+      const { onClickRemove } = this.state;
+      const { className } = e.target;
+      const id = e.target.closest('.page').dataset.id;
+
+      switch (className) {
+        case 'page_name':
+          push(`/pages/${id}`);
+          break;
+        case 'page_toggleButton':
+          console.log('toggle');
+          break;
+        case 'page_removeButton':
+          onClickRemove(id);
+          break;
+        case 'page_add_pageButton':
+          console.log('add');
+          break;
+        default:
+      }
+    });
   }
 }
 

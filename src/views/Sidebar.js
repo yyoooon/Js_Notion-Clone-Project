@@ -1,8 +1,17 @@
 import Component from '../components/base/Component.js';
 import PageList from '../components/sidebar/PageList/PageList.js';
+import {
+  getDocumentList,
+  createDocument,
+  deleteDocument,
+} from '/Users/yang-yun/Desktop/front-end/Js_NotionClone_Project/src/api/apis.js';
 
 class Sidebar extends Component {
-  PageList;
+  setup() {
+    this.state = {
+      pageListData: [],
+    };
+  }
 
   template() {
     return `
@@ -10,14 +19,30 @@ class Sidebar extends Component {
     `;
   }
 
+  async handleClickRemoveIcon(id) {
+    await deleteDocument(id);
+    this.fetch();
+    return;
+  }
+
   mounted() {
     const $pageList = this.$target.querySelector('[data-component="PageList"]');
-    this.PageList = new PageList($pageList);
+    this.PageList = new PageList($pageList, {
+      data: this.state.pageListData,
+      onClickRemove: this.handleClickRemoveIcon.bind(this),
+    });
+  }
+
+  async fetch() {
+    const pageListData = await getDocumentList();
+    this.setState({ pageListData }, true);
+  }
+
+  reRender() {
+    this.PageList.setState({
+      data: this.state.pageListData,
+    });
   }
 }
 
 export default Sidebar;
-
-// Header 렌더링
-// 서버에서 id에 맞는 페이지 목록 데이터 불러와서 PageList에 전달해주고 렌더링
-// AddButton렌더링

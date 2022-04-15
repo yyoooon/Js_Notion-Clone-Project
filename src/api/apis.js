@@ -28,7 +28,7 @@ export const updateDocument = ({ postId, title, content }) =>
     }),
   });
 
-export const deleteDocument = () =>
+export const deleteDocument = postId =>
   request(`/documents/${postId}`, {
     method: 'DELETE',
   });

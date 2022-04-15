@@ -1,4 +1,4 @@
-import { createElement, addClassName } from '../../utils/createElement.js';
+import { createElement } from '../../utils/createElement.js';
 
 export default class Component {
   $node;
@@ -18,11 +18,8 @@ export default class Component {
     return;
   }
 
-  createNode({ tagName, classArr }) {
+  createNode(tagName) {
     this.$node = createElement(tagName);
-    if (Array.isArray(classArr) && classArr.length) {
-      addClassName(this.$node, classArr);
-    }
   }
 
   fetch() {
