@@ -22,7 +22,11 @@ class Sidebar extends Component {
   async handleClickRemoveIcon(id) {
     await deleteDocument(id);
     this.fetch();
-    return;
+  }
+
+  async handleClickAddIcon({ title, parentId }) {
+    await createDocument({ title, parentId });
+    this.fetch();
   }
 
   mounted() {
@@ -30,6 +34,7 @@ class Sidebar extends Component {
     this.PageList = new PageList($pageList, {
       data: this.state.pageListData,
       onClickRemove: this.handleClickRemoveIcon.bind(this),
+      onClickAdd: this.handleClickAddIcon.bind(this),
     });
   }
 

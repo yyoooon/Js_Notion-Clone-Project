@@ -41,7 +41,7 @@ class PageList extends Component {
 
   setEvent() {
     this.addEventToTarget('click', '.page', e => {
-      const { onClickRemove } = this.state;
+      const { onClickRemove, onClickAdd } = this.state;
       const { className } = e.target;
       const id = e.target.closest('.page').dataset.id;
 
@@ -57,6 +57,7 @@ class PageList extends Component {
           break;
         case 'page_add_pageButton':
           console.log('add');
+          onClickAdd({ title: '제목 없음', parentId: id });
           break;
         default:
       }
