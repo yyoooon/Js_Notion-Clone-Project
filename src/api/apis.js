@@ -14,8 +14,8 @@ export const createDocument = ({ title, parentId }) =>
   request(`/documents`, {
     method: 'POST',
     body: JSON.stringify({
-      title: title || '',
-      parent: parentId || null,
+      title: title,
+      parent: parentId,
     }),
   });
 

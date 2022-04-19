@@ -1,9 +1,24 @@
 import Component from '../components/base/Component.js';
+import Editor from '../components/editFrame/Editor/Editor.js';
+import { getDocument } from '../api/apis.js';
 
 class EditFrame extends Component {
-  // 서버에서 id에 맞는 데이터 불러와서 editor에 전달하기
-  template() {
-    return `<h1>EditFrame</h1>`;
+  setup() {
+    this.state = {
+      id: '',
+    };
+  }
+
+  async mounted() {
+    const { id } = this.state;
+    if (!id) return;
+    const pageData = await getDocument(id);
+    const { title, content } = pageData;
+
+    this.Editor = new Editor(this.$target, {
+      title: title,
+      content: content || '',
+    });
   }
 }
 

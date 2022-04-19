@@ -10,7 +10,7 @@ const request = async (url, options = {}) => {
       },
     });
     if (res.ok) {
-      return res.json();
+      return await res.json();
     }
     throw new Error('API 호출 오류');
   } catch (e) {

@@ -4,9 +4,6 @@ import EditFrame from './views/EditFrame.js';
 import { pushRouter, replaceRouter, popStateRouter } from './routes/router.js';
 
 class App extends Component {
-  Sidebar;
-  EditFrame;
-
   template() {
     return `
       <aside class="sidebar"></aside>
@@ -23,7 +20,7 @@ class App extends Component {
 
     if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
-      console.log(pageId);
+      this.EditFrame.setState({ id: pageId });
       return;
     }
   }
@@ -45,7 +42,6 @@ class App extends Component {
   mounted() {
     const $sidebar = this.$target.querySelector('.sidebar');
     const $editFrame = this.$target.querySelector('.edit_frame');
-
     this.Sidebar = new Sidebar($sidebar);
     this.EditFrame = new EditFrame($editFrame);
 

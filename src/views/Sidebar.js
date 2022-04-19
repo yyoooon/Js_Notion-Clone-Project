@@ -1,5 +1,6 @@
 import Component from '../components/base/Component.js';
 import PageList from '../components/sidebar/PageList/PageList.js';
+import AddButton from '../components/sidebar/AddButton/AddButton.js';
 import {
   getDocumentList,
   createDocument,
@@ -16,25 +17,32 @@ class Sidebar extends Component {
   template() {
     return `
     <div data-component="PageList"></div>
+    <div data-component="AddButton"></div>
     `;
   }
 
-  async handleClickRemoveIcon(id) {
+  async handleClickDelete(id) {
     await deleteDocument(id);
     this.fetch();
   }
 
-  async handleClickAddIcon({ title, parentId }) {
+  async handleClickCreate({ title, parentId }) {
     await createDocument({ title, parentId });
     this.fetch();
   }
 
   mounted() {
     const $pageList = this.$target.querySelector('[data-component="PageList"]');
+    const $addButton = this.$target.querySelector(
+      '[data-component="AddButton"]',
+    );
     this.PageList = new PageList($pageList, {
       data: this.state.pageListData,
-      onClickRemove: this.handleClickRemoveIcon.bind(this),
-      onClickAdd: this.handleClickAddIcon.bind(this),
+      onClickDelete: this.handleClickDelete.bind(this),
+      onClickCreate: this.handleClickCreate.bind(this),
+    });
+    new AddButton($addButton, {
+      onClick: this.handleClickCreate.bind(this),
     });
   }
 
