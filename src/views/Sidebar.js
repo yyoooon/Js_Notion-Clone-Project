@@ -5,7 +5,7 @@ import {
   getDocumentList,
   createDocument,
   deleteDocument,
-} from '/Users/yang-yun/Desktop/front-end/Js_NotionClone_Project/src/api/apis.js';
+} from '../api/apis.js';
 import { push } from '../routes/router.js';
 
 class Sidebar extends Component {
