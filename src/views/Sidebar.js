@@ -6,6 +6,7 @@ import {
   createDocument,
   deleteDocument,
 } from '/Users/yang-yun/Desktop/front-end/Js_NotionClone_Project/src/api/apis.js';
+import { push } from '../routes/router.js';
 
 class Sidebar extends Component {
   setup() {
@@ -23,11 +24,13 @@ class Sidebar extends Component {
 
   async handleClickDelete(id) {
     await deleteDocument(id);
+    push('/');
     this.fetch();
   }
 
   async handleClickCreate({ title, parentId }) {
-    await createDocument({ title, parentId });
+    const { id } = await createDocument({ title, parentId });
+    push(`/page/${id}`);
     this.fetch();
   }
 

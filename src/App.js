@@ -2,6 +2,7 @@ import Component from './components/base/Component.js';
 import Sidebar from './views/Sidebar.js';
 import EditFrame from './views/EditFrame.js';
 import { pushRouter, replaceRouter, popStateRouter } from './routes/router.js';
+import { getDocument } from './api/apis.js';
 
 class App extends Component {
   template() {
@@ -11,41 +12,48 @@ class App extends Component {
     `;
   }
 
-  route() {
+  async route(target) {
     const { pathname } = window.location;
 
     if (pathname === '/') {
+      new EditFrame(target, { id: '', title: '', content: '' });
       return;
     }
 
     if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
-      this.EditFrame.setState({ id: pageId });
+      const { title, content } = await getDocument(pageId); // 깜빡깜빡 때문에 데이터 받아온 후에 렌더링
+      new EditFrame(target, {
+        id: pageId,
+        title,
+        content,
+        onUpdatePageList: () => {
+          this.Sidebar.fetch();
+        },
+      });
       return;
     }
   }
 
-  setInitRouter() {
-    this.route();
+  setInitRouter(target) {
+    this.route(target);
 
     pushRouter(() => {
-      this.route();
+      this.route(target);
     });
     replaceRouter(() => {
-      this.route();
+      this.route(target);
     });
     popStateRouter(() => {
-      this.route();
+      this.route(target);
     });
   }
 
   mounted() {
     const $sidebar = this.$target.querySelector('.sidebar');
-    const $editFrame = this.$target.querySelector('.edit_frame');
     this.Sidebar = new Sidebar($sidebar);
-    this.EditFrame = new EditFrame($editFrame);
-
-    this.setInitRouter();
+    const $editFrame = this.$target.querySelector('.edit_frame');
+    this.setInitRouter($editFrame);
   }
 }
 
