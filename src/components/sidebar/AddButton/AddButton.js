@@ -8,7 +8,7 @@ class AddButton extends Component {
     const { onClick } = this.props;
     const $addButton = this.$target.querySelector('.create_page_button');
     $addButton.addEventListener('click', () => {
-      onClick({ title: '제목 없음', parentId: null });
+      onClick({ title: '', parentId: null });
     });
   }
 }

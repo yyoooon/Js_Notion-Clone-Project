@@ -16,13 +16,17 @@ class App extends Component {
     const { pathname } = window.location;
 
     if (pathname === '/') {
-      new EditFrame(target, { id: '', title: '', content: '' });
+      new EditFrame(target, {
+        id: '',
+        title: '윤의 노션입니다',
+        content: '문서를 작성해주세요',
+      });
       return;
     }
 
     if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
-      const { title, content } = await getDocument(pageId); // 깜빡깜빡 때문에 데이터 받아온 후에 렌더링
+      const { title, content } = await getDocument(pageId);
       new EditFrame(target, {
         id: pageId,
         title,

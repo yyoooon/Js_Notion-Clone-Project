@@ -32,7 +32,7 @@ class Sidebar extends Component {
 
   async handleClickCreate({ title, parentId }) {
     const { id } = await createDocument({ title, parentId });
-    push(`/page/${id}`);
+    push(`/pages/${id}`);
     this.fetch();
   }
 

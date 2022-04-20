@@ -8,8 +8,12 @@ class Editor extends Component {
   template() {
     return `
       <div class='editor'>
-        <input type='text' name='title' value='${this.state.title}' placeholder='제목 없음' />
-        <textarea name='content' placeholder='내용을 적어주세요'>${this.state.content}</textarea>
+        <input type='text' name='title' value='${
+          this.state.title
+        }' placeholder='제목 없음' />
+        <textarea name='content' placeholder='내용을 적어주세요'>${
+          this.state.content || ''
+        }</textarea>
       </div>
     `;
   }

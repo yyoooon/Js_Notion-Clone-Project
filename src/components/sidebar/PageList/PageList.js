@@ -16,7 +16,7 @@ class PageList extends Component {
 
   createChildrenPages(childrenData, parentEl) {
     const childItemContainer = createElement('ul');
-    addClass(childItemContainer, ['page_list', 'visible']);
+    addClass(childItemContainer, ['page_list']);
 
     parentEl.$node.appendChild(childItemContainer);
     this.createPageItems(childrenData, childItemContainer);
@@ -39,24 +39,38 @@ class PageList extends Component {
     this.createPageItems(data, $pageList);
   }
 
+  changeToggleIcon(target, children) {
+    if (target.classList.contains('fa-caret-right')) {
+      target.classList.replace('fa-caret-right', 'fa-caret-down');
+      children && children.classList.toggle('visible');
+      return;
+    }
+    if (target.classList.contains('fa-caret-down')) {
+      target.classList.replace('fa-caret-down', 'fa-caret-right');
+      children && children.classList.toggle('visible');
+      return;
+    }
+  }
+
   setEvent() {
     this.addEventToTarget('click', '.page', e => {
       const { onClickDelete, onClickCreate } = this.state;
       const { className } = e.target;
-      const id = e.target.closest('.page').dataset.id;
+      const pageItem = e.target.closest('.page');
+      const pageId = pageItem.dataset.id;
+      const children = pageItem.querySelector('.page_list');
+
+      this.changeToggleIcon(e.target, children);
 
       switch (className) {
         case 'page_name':
-          push(`/pages/${id}`);
-          break;
-        case 'page_toggleButton':
-          console.log('toggle');
+          push(`/pages/${pageId}`);
           break;
         case 'page_removeButton':
-          onClickDelete(id);
+          onClickDelete(pageId);
           break;
         case 'page_add_pageButton':
-          onClickCreate({ title: '제목 없음', parentId: id });
+          onClickCreate({ title: '', parentId: pageId });
           break;
         default:
       }
