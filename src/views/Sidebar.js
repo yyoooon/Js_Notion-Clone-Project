@@ -17,8 +17,10 @@ class Sidebar extends Component {
 
   template() {
     return `
-    <div data-component="PageList"></div>
-    <div data-component="AddButton"></div>
+    <div class="sidebar_contents_wrap">
+      <div data-component="PageList" class="pages_outliner"></div>
+      <div data-component="AddButton"></div>
+    </div>
     `;
   }
 
