@@ -1,50 +1,64 @@
-import Sidebar from './components/sidebar/Sidebar.js';
-import EditFrame from './components/pageEditSection/EditFrame.js';
-import { pushRouter, replaceRouter } from './utils/router.js';
+import Component from './components/base/Component.js';
+import Sidebar from './views/Sidebar.js';
+import EditFrame from './views/EditFrame.js';
+import { pushRouter, replaceRouter, popStateRouter } from './routes/router.js';
+import { getDocument } from './api/apis.js';
 
-export default function App({ $target }) {
-  const sidebar = new Sidebar({
-    $target,
-    initialState: [],
-  });
+class App extends Component {
+  template() {
+    return `
+      <aside class="sidebar"></aside>
+      <section class="edit_frame"></section>
+    `;
+  }
 
-  const editFrame = new EditFrame({
-    $target,
-    initialState: {
-      id: '',
-      title: '',
-      content: '',
-      documents: [],
-      createdAt: '',
-      updatedAt: '',
-    },
-    onListChange: () => {
-      sidebar.setState();
-    },
-  });
-
-  this.route = async () => {
+  async route(target) {
     const { pathname } = window.location;
+
     if (pathname === '/') {
-      editFrame.setState({
-        ...this.state,
-        id: 'new',
+      new EditFrame(target, {
+        id: '',
+        title: '윤의 노션입니다',
+        content: '문서를 작성해보세요!',
       });
-    } else if (pathname.indexOf('/pages/') === 0) {
-      const [, , pageId] = pathname.split('/');
-      editFrame.setState({
-        ...editFrame.state,
-        id: Number.isNaN(pageId) ? pageId : parseInt(pageId, 10),
-      });
+      return;
     }
-  };
 
-  sidebar.setState();
-  this.route();
+    if (pathname.indexOf('/pages/') === 0) {
+      const [, , pageId] = pathname.split('/');
+      const { title, content } = await getDocument(pageId);
+      new EditFrame(target, {
+        id: pageId,
+        title,
+        content,
+        onUpdatePageList: () => {
+          this.Sidebar.fetch();
+        },
+      });
+      return;
+    }
+  }
 
-  pushRouter(this.route);
-  replaceRouter(this.route);
-  window.addEventListener('popstate', () => {
-    this.route();
-  });
+  setInitRouter(target) {
+    this.route(target);
+
+    pushRouter(() => {
+      this.route(target);
+    });
+    replaceRouter(() => {
+      this.route(target);
+    });
+    popStateRouter(() => {
+      this.route(target);
+    });
+  }
+
+  mounted() {
+    const $sidebar = this.$target.querySelector('.sidebar');
+    this.Sidebar = new Sidebar($sidebar);
+    const $editFrame = this.$target.querySelector('.edit_frame');
+    this.setInitRouter($editFrame);
+  }
 }
+
+export default App;
