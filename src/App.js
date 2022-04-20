@@ -19,7 +19,7 @@ class App extends Component {
       new EditFrame(target, {
         id: '',
         title: '윤의 노션입니다',
-        content: '문서를 작성해주세요',
+        content: '문서를 작성해보세요!',
       });
       return;
     }

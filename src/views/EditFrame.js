@@ -9,6 +9,7 @@ class EditFrame extends Component {
 
   async handleChangeTitle(e) {
     const { id } = this.state;
+    if (!id) return;
     this.state.title = e.target.value;
     await updateDocument({
       postId: id,
@@ -20,8 +21,8 @@ class EditFrame extends Component {
 
   async handleChangeContent(e) {
     const { id } = this.state;
+    if (!id) return;
     this.state.content = e.target.value;
-
     await updateDocument({
       postId: id,
       title: this.state.title,
