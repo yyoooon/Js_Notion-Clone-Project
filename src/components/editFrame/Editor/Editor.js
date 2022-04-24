@@ -19,12 +19,12 @@ class Editor extends Component {
   }
 
   setEvent() {
-    const { onChangeTitle, onChangeContent } = this.props;
+    const { onUpdateContent } = this.props;
     const $input = this.$target.querySelector('[name="title"]');
     const $textarea = this.$target.querySelector('[name="content"]');
 
-    $input.addEventListener('input', onChangeTitle);
-    $textarea.addEventListener('input', onChangeContent);
+    $input.addEventListener('keyup', onUpdateContent);
+    $textarea.addEventListener('keyup', onUpdateContent);
   }
 }
 
