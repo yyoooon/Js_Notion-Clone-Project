@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/yyoooon/Js_NotionClone_Project/issues"
   },
-  "homepage": ".",
+  "homepage": "https://github.com/yyoooon/Js_NotionClone_Project#readme",
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/plugin-transform-runtime": "^7.17.0",
