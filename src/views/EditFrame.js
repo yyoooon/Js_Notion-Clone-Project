@@ -3,31 +3,32 @@ import Editor from '../components/editFrame/Editor/Editor.js';
 import { updateDocument } from '../api/apis.js';
 
 class EditFrame extends Component {
+  timer = null;
+
   setup() {
     this.state = this.props;
   }
 
-  async handleChangeTitle(e) {
+  handleUpdateContent(e) {
     const { id } = this.state;
     if (!id) return;
-    this.state.title = e.target.value;
-    await updateDocument({
-      postId: id,
-      title: this.state.title,
-      content: this.state.content,
-    });
-    this.state.onUpdatePageList();
-  }
 
-  async handleChangeContent(e) {
-    const { id } = this.state;
-    if (!id) return;
-    this.state.content = e.target.value;
-    await updateDocument({
-      postId: id,
-      title: this.state.title,
-      content: this.state.content,
-    });
+    const { name, value } = e.target;
+    this.state[name] = value;
+
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+    // 낙관적 업데이트 필요
+
+    this.timer = setTimeout(async () => {
+      await updateDocument({
+        postId: id,
+        title: this.state.title,
+        content: this.state.content,
+      });
+      name === 'title' && this.state.onUpdatePageList();
+    }, 300);
   }
 
   mounted() {
@@ -35,8 +36,7 @@ class EditFrame extends Component {
     this.Editor = new Editor(this.$target, {
       title,
       content,
-      onChangeTitle: this.handleChangeTitle.bind(this),
-      onChangeContent: this.handleChangeContent.bind(this),
+      onUpdateContent: this.handleUpdateContent.bind(this),
     });
   }
 }
