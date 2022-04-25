@@ -34,10 +34,3 @@
 ## 컴포넌트 구조
 ![컴포넌트 구조](https://user-images.githubusercontent.com/81611808/147889079-d5e72ae4-814e-4ecd-a30b-2430c6bf2b5e.png)
 
-## 컴포넌트의 역할
-![컴포넌트 역할_1](https://user-images.githubusercontent.com/81611808/147889085-f7c41d63-0f7a-44c8-9426-073e27fab781.png)
-![컴포넌트 역할_2](https://user-images.githubusercontent.com/81611808/147889087-c96b3a21-6003-4bdc-81d1-17a1641fe943.png)
-
-## 컴포넌트 간의 상호작용
-![컴포넌트 상호작용](https://user-images.githubusercontent.com/81611808/147889090-da247917-5bcb-44a4-b9b6-2621cb2343d3.png)
-
