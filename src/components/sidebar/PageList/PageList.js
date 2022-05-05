@@ -22,13 +22,17 @@ class PageList extends Component {
   // 1. 토글 아이콘을 아래로
   // 2. 자식 ul을 보이도록
   // 데이터는 가져오지만 렌더링을 어떻게 할지를 정하는 것
+  // 자식이 없으면 하위 문서가 없습니다. 달기
+
   createChildrenPages(childrenData, parentEl, isOpenChild) {
     const childItemContainer = createElement('ul');
     addClass(childItemContainer, ['page_list']);
     isOpenChild && addClass(childItemContainer, ['visible']);
 
-    parentEl.$node.appendChild(childItemContainer);
-    this.createPageItems(childrenData, childItemContainer);
+    parentEl.$node.appendChild(childItemContainer); // ul을 붙힘
+    childrenData.length
+      ? this.createPageItems(childrenData, childItemContainer)
+      : this.createEmptyItem(childItemContainer);
   }
 
   createPageItems(data, itemContainer) {
@@ -45,10 +49,18 @@ class PageList extends Component {
           title,
           isOpenChild,
         });
-        const haveChildren = documents.length;
-        haveChildren &&
-          this.createChildrenPages(documents, pageItem, isOpenChild);
+        this.createChildrenPages(documents, pageItem, isOpenChild);
       });
+  }
+
+  createEmptyItem(itemContainer) {
+    itemContainer.innerHTML = `
+      <li class='page'>
+        <div class="page_focuable_elements">
+          <h3 class="page_name">하위 문서가 없습니다</h3>
+        </div>
+      </li>
+    `;
   }
 
   mounted() {
