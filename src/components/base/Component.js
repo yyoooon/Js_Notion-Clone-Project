@@ -10,7 +10,6 @@ export default class Component {
     this.props = props;
     this.setup();
     this.render();
-    this.setEvent();
     this.fetch();
   }
 
@@ -61,6 +60,7 @@ export default class Component {
       this.$target.innerHTML = this.template();
     }
     this.mounted();
+    this.setEvent();
   }
 
   reRender() {

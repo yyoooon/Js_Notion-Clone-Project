@@ -12,51 +12,60 @@ class App extends Component {
     `;
   }
 
-  async route(target) {
+  async route() {
     const { pathname } = window.location;
 
     if (pathname === '/') {
-      new EditFrame(target, {
-        id: '',
-        title: '윤의 노션입니다',
-        content: '문서를 작성해보세요!',
-      });
-      return;
+      this.EditFrame.setState(
+        {
+          id: '',
+          title: '윤의 노션입니다',
+          content: '문서를 작성해보세요',
+        },
+        true,
+      );
     }
 
     if (pathname.indexOf('/pages/') === 0) {
       const [, , pageId] = pathname.split('/');
       const { title, content } = await getDocument(pageId);
-      new EditFrame(target, {
-        id: pageId,
-        title,
-        content,
-        onUpdatePageList: () => {
-          this.Sidebar.fetch();
+      this.EditFrame.setState(
+        {
+          id: pageId,
+          title,
+          content,
         },
-      });
-      return;
+        true,
+      );
     }
   }
 
-  setInitRouter(target) {
-    this.route(target);
+  setInitRouter() {
+    this.route();
 
     pushRouter(() => {
-      this.route(target);
+      this.route();
     });
     replaceRouter(() => {
-      this.route(target);
+      this.route();
     });
     popStateRouter(() => {
-      this.route(target);
+      this.route();
     });
   }
 
   mounted() {
     const $sidebar = this.$target.querySelector('.sidebar');
-    this.Sidebar = new Sidebar($sidebar);
     const $editFrame = this.$target.querySelector('.edit_frame');
+    this.Sidebar = new Sidebar($sidebar);
+    this.EditFrame = new EditFrame($editFrame, {
+      id: '',
+      title: '',
+      content: '',
+      onUpdatePageList: () => {
+        this.Sidebar.fetch();
+      },
+    });
     this.setInitRouter($editFrame);
   }
 }
