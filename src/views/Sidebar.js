@@ -7,6 +7,7 @@ import {
   deleteDocument,
 } from '../api/apis.js';
 import { push } from '../routes/router.js';
+import { setItem, getItem } from '../utils/storage.js';
 
 class Sidebar extends Component {
   setup() {
@@ -27,12 +28,19 @@ class Sidebar extends Component {
   async handleClickDelete(id) {
     await deleteDocument(id);
     push('/');
+    const openedPages = getItem('openedPages', []);
+    setItem(
+      'openedPages',
+      openedPages.filter(v => v !== String(id)),
+    );
     this.fetch();
   }
 
   async handleClickCreate({ title, parentId }) {
     const { id } = await createDocument({ title, parentId });
     push(`/pages/${id}`);
+    const openedPages = getItem('openedPages', []);
+    setItem('openedPages', [...openedPages, String(parentId)]);
     this.fetch();
   }
 

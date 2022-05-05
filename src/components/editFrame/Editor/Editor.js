@@ -22,6 +22,10 @@ class Editor extends Component {
     `;
   }
 
+  mounted() {
+    this.setEvent();
+  }
+
   setEvent() {
     const { onUpdateContent } = this.props;
     const $input = this.$target.querySelector('[name="title"]');
