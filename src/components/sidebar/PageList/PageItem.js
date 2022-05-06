@@ -9,11 +9,11 @@ class PageItem extends Component {
   }
 
   template() {
-    const { title } = this.props;
+    const { title, isOpenChild } = this.props;
     return `
         <div class="page_focuable_elements">
         <button class="page_toggleButton" type="button">
-          <i class="fas fa-caret-right"></i>
+          <i class="fas fa-caret-${isOpenChild ? 'down' : 'right'}"></i>
         </button>
         <h3 class="page_name">${title || '제목 없음'}</h3>
         <button class="page_removeButton" type="button">

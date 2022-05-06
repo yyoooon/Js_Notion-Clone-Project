@@ -19,7 +19,6 @@ class EditFrame extends Component {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    // 낙관적 업데이트 필요
 
     this.timer = setTimeout(async () => {
       await updateDocument({
@@ -37,6 +36,14 @@ class EditFrame extends Component {
       title,
       content,
       onUpdateContent: this.handleUpdateContent.bind(this),
+    });
+  }
+
+  reRender() {
+    const { title, content } = this.state;
+    this.Editor.setState({
+      title,
+      content,
     });
   }
 }

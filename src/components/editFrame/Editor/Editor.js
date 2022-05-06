@@ -2,7 +2,11 @@ import Component from '../../base/Component';
 
 class Editor extends Component {
   setup() {
-    this.state = this.props;
+    const { title, content } = this.props;
+    this.state = {
+      title,
+      content,
+    };
   }
 
   template() {
@@ -16,6 +20,10 @@ class Editor extends Component {
         }</textarea>
       </div>
     `;
+  }
+
+  mounted() {
+    this.setEvent();
   }
 
   setEvent() {
