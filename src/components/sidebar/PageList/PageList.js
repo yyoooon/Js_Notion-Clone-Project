@@ -16,34 +16,20 @@ class PageList extends Component {
   }
 
   createPageItems(data, itemContainer) {
+    if (!data.length) return;
+
     itemContainer.innerHTML = '';
     const openedPages = getItem('openedPages', []);
 
-    data.length &&
-      data.map(({ id, title, documents }) => {
-        let isOpenChild = false;
-        if (openedPages.includes(String(id))) {
-          isOpenChild = true;
-        }
-
-        const pageItem = new PageItem(itemContainer, {
-          id,
-          title,
-          isOpenChild,
-        });
-        this.createChildrenPages(documents, pageItem, isOpenChild);
+    data.map(({ id, title, documents }) => {
+      const isOpenChild = openedPages.includes(String(id));
+      const pageItem = new PageItem(itemContainer, {
+        id,
+        title,
+        isOpenChild,
       });
-  }
-
-  createChildrenPages(childrenData, parentEl, isOpenChild) {
-    const childItemContainer = createElement('ul');
-    addClass(childItemContainer, ['page_list']);
-    isOpenChild && addClass(childItemContainer, ['visible']);
-
-    parentEl.$node.appendChild(childItemContainer);
-    childrenData.length
-      ? this.createPageItems(childrenData, childItemContainer)
-      : this.createEmptyItem(childItemContainer);
+      this.createChildrenPages(documents, pageItem, isOpenChild);
+    });
   }
 
   createEmptyItem(itemContainer) {
@@ -54,6 +40,18 @@ class PageList extends Component {
         </div>
       </li>
     `;
+  }
+
+  createChildrenPages(childrenData, parentEl, isOpenChild) {
+    const childItemList = createElement('ul');
+    addClass(childItemList, ['page_list']);
+    isOpenChild && addClass(childItemList, ['visible']);
+
+    childrenData.length
+      ? this.createPageItems(childrenData, childItemList)
+      : this.createEmptyItem(childItemList);
+
+    parentEl.$node.appendChild(childItemList);
   }
 
   mounted() {
