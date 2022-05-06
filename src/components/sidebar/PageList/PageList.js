@@ -100,6 +100,7 @@ class PageList extends Component {
 
       this.changeToggleIcon(e.target, children, pageId);
 
+      if (!pageId) return;
       switch (className) {
         case 'page_name':
           push(`/pages/${pageId}`);
