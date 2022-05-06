@@ -2,6 +2,8 @@
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=ffffff"/> <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 ### Vanilla js만을 사용해 컴포넌트 기반의 SPA를 구현해보는 프로젝트
 
+[배포 링크](https://js-notion-clone-project.vercel.app/)
+
 **기간**
 </br>
 21.08.25 ~ 21.09.10 
@@ -9,11 +11,10 @@
 리팩토링 22.04.11~
 
 </br>
-**인원**
+
+**인원** 
 </br>
 개인 프로젝트
-
-[배포 링크](https://js-notion-clone-project.vercel.app/)
 
 #### 주요 기능
 
