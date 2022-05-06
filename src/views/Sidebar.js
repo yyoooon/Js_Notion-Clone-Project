@@ -40,8 +40,9 @@ class Sidebar extends Component {
     const { id } = await createDocument({ title, parentId });
     push(`/pages/${id}`);
     const openedPages = getItem('openedPages', []);
-    !openedPages.includes(parentId) &&
+    if (parentId && !openedPages.includes(parentId)) {
       setItem('openedPages', [...openedPages, String(parentId)]);
+    }
     this.fetch();
   }
 
