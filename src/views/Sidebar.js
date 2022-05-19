@@ -66,7 +66,7 @@ class Sidebar extends Component {
     this.setState({ pageListData }, true);
   }
 
-  reRender() {
+  childUpdate() {
     this.PageList.setState({
       data: this.state.pageListData,
     });

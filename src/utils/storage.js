@@ -3,7 +3,6 @@ const storage = window.sessionStorage;
 export const setItem = (key, value) => {
   try {
     storage.setItem(key, JSON.stringify(value));
-    console.log(key, value);
   } catch (e) {
     console.log(e);
   }

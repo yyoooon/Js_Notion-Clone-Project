@@ -63,12 +63,30 @@ export default class Component {
     this.mounted();
   }
 
-  reRender() {
+  childUpdate() {
     return;
   }
 
-  setState(newState, reRender = false) {
+  checkNeedRender(newState) {
+    let needRender = false;
+    const updateStateKey = Object.keys(newState);
+
+    updateStateKey.map(key => {
+      if (
+        !(JSON.stringify(this.state[key]) === JSON.stringify(newState[key]))
+      ) {
+        needRender = true;
+      }
+    });
+
+    return needRender;
+  }
+
+  setState(newState, childUpdate = false) {
+    const needRender = this.checkNeedRender(newState);
+    if (!needRender) return;
+
     this.state = { ...this.state, ...newState };
-    reRender ? this.reRender() : this.render();
+    childUpdate ? this.childUpdate() : this.render();
   }
 }

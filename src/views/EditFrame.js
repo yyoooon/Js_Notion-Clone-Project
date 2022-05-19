@@ -39,7 +39,7 @@ class EditFrame extends Component {
     });
   }
 
-  reRender() {
+  childUpdate() {
     const { title, content } = this.state;
     this.Editor.setState({
       title,
