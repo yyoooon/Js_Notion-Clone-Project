@@ -1,6 +1,9 @@
 import Component from '../../base/Component';
 
 class Editor extends Component {
+  $input;
+  $textarea;
+
   setup() {
     const { title, content } = this.props;
     this.state = {
@@ -22,18 +25,32 @@ class Editor extends Component {
     `;
   }
 
+  setCursorToEnd(target) {
+    const maxLength = target.value.length;
+    target.setSelectionRange(maxLength, maxLength);
+  }
+
+  setFocus() {
+    if (!this.$input.value) {
+      this.$input.focus();
+      return;
+    }
+    this.$textarea.focus();
+    this.setCursorToEnd(this.$textarea);
+  }
+
   mounted() {
     this.setEvent();
   }
 
   setEvent() {
     const { onUpdateContent } = this.props;
-    const $input = this.$target.querySelector('[name="title"]');
-    const $textarea = this.$target.querySelector('[name="content"]');
+    this.$input = this.$target.querySelector('[name="title"]');
+    this.$textarea = this.$target.querySelector('[name="content"]');
 
-    if (!$input.value) $input.focus();
-    $input.addEventListener('keyup', onUpdateContent);
-    $textarea.addEventListener('keyup', onUpdateContent);
+    this.setFocus();
+    this.$input.addEventListener('keyup', onUpdateContent);
+    this.$textarea.addEventListener('keyup', onUpdateContent);
   }
 }
 
