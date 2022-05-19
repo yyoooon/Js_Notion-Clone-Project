@@ -13,7 +13,7 @@ class Editor extends Component {
     return `
       <div class='editor'>
         <input type='text' name='title' value='${
-          this.state.title
+          this.state.title || ''
         }' placeholder='제목 없음' />
         <textarea name='content' placeholder='내용을 적어주세요'>${
           this.state.content || ''
@@ -31,6 +31,7 @@ class Editor extends Component {
     const $input = this.$target.querySelector('[name="title"]');
     const $textarea = this.$target.querySelector('[name="content"]');
 
+    if (!$input.value) $input.focus();
     $input.addEventListener('keyup', onUpdateContent);
     $textarea.addEventListener('keyup', onUpdateContent);
   }

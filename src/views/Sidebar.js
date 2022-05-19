@@ -39,6 +39,7 @@ class Sidebar extends Component {
   async handleClickCreate({ title, parentId }) {
     const { id } = await createDocument({ title, parentId });
     push(`/pages/${id}`);
+
     const openedPages = getItem('openedPages', []);
     if (parentId && !openedPages.includes(parentId)) {
       setItem('openedPages', [...openedPages, String(parentId)]);

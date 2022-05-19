@@ -9,9 +9,9 @@ export default class Component {
     this.$target = $target;
     this.props = props;
     this.setup();
+    this.fetch();
     this.render();
     this.setEvent();
-    this.fetch();
   }
 
   setup() {
