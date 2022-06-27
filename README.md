@@ -55,9 +55,9 @@ export default class Component {
     this.$target = $target; // 부모 돔 저장
     this.props = props;     // props 저장
     this.setup();           // 초기 셋팅
-    this.fetch();           // 외부 데이터를 비동기로 불러온 후, 그 값으로 setState
     this.render();          // 렌더링(돔 생성)
     this.setEvent();        // 돔에 이벤트 부착
+    this.fetch();           // 외부 데이터를 비동기로 불러온 후, 그 값으로 setState
   }
 
   // 주로 상태를 셋팅한다
