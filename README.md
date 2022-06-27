@@ -1,5 +1,5 @@
 # 노션 클로닝 프로젝트                                  
-### Vanilla js만을 사용해 컴포넌트 기반의 SPA를 구현해보는 프로젝트
+### Vanilla js만을 사용해 컴포넌트 기반의 SPA를 구현해보는 프로젝트 
 
 [배포 링크](https://js-notion-clone-project.vercel.app/)
 
@@ -151,6 +151,7 @@ export default class Component {
     childUpdate ? this.childUpdate() : this.render();
   }
 }
+
 
 ```
 
