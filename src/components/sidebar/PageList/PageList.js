@@ -15,52 +15,66 @@ class PageList extends Component {
     `;
   }
 
-  createPageItems(data, itemContainer) {
-    if (!data.length) return;
-
-    itemContainer.innerHTML = '';
-    const openedPages = getItem('openedPages', []);
-
-    data.map(({ id, title, documents }) => {
-      const isOpenChild = openedPages.includes(String(id));
-      const pageItem = new PageItem(itemContainer, {
-        id,
-        title,
-        isOpenChild,
-      });
-      this.createChildrenPages(documents, pageItem, isOpenChild);
-    });
-  }
-
-  createEmptyItem(itemContainer) {
-    itemContainer.innerHTML = `
-      <li class='page'>
-        <div class="page_focuable_elements">
-          <h3 class="page_name">하위 문서가 없습니다</h3>
-        </div>
-      </li>
-    `;
-  }
-
-  createChildrenPages(childrenData, parentEl, isOpenChild) {
-    const childItemList = createElement('ul');
-    addClass(childItemList, ['page_list']);
-    isOpenChild && addClass(childItemList, ['visible']);
-
-    childrenData.length
-      ? this.createPageItems(childrenData, childItemList)
-      : this.createEmptyItem(childItemList);
-
-    parentEl.$node.appendChild(childItemList);
-  }
-
   mounted() {
     const { data } = this.state;
     const $pageList = document.getElementById('root');
-    this.createPageItems(data, $pageList);
+    this.createPageList(data, $pageList);
     this.setEvent();
   }
 
+  // pageList 렌더링 관련
+  createPageList(pageDataList, pageListDom) {
+    if (!pageDataList.length) return;
+    pageListDom.innerHTML = '';
+
+    pageDataList.map(({ id, title, documents }) => {
+      const isOpenChildPageList = this.checkIsOpenChildPageList(id);
+      const pageItem = new PageItem(pageListDom, {
+        id,
+        title,
+        isOpenChildPageList,
+      });
+
+      const $childPageList = this.createChildPageList(documents);
+      isOpenChildPageList && addClass($childPageList, ['visible']);
+      pageItem.$node.appendChild($childPageList);
+    });
+  }
+
+  createChildPageList(childPageData) {
+    const $childPageList = this.createPageListDom();
+
+    childPageData.length
+      ? this.createPageList(childPageData, $childPageList)
+      : this.createEmptyItem($childPageList);
+
+    return $childPageList;
+  }
+
+  checkIsOpenChildPageList(pageId) {
+    const isOpenChildPageList = getItem('openedPages', []).includes(
+      String(pageId),
+    );
+    return isOpenChildPageList;
+  }
+
+  createPageListDom() {
+    const $pageList = createElement('ul');
+    addClass($pageList, ['page_list']);
+    return $pageList;
+  }
+
+  createEmptyItem($childItemList) {
+    $childItemList.innerHTML = `
+    <li class='page'>
+      <div class="page_focuable_elements">
+        <h3 class="page_name">하위 문서가 없습니다</h3>
+      </div>
+    </li>
+  `;
+  }
+
+  // event 관련
   changeToggleIcon(target, children, pageId) {
     const isClose = target.classList.contains('fa-caret-right');
     const isOpen = target.classList.contains('fa-caret-down');
